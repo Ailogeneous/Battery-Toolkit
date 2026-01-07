@@ -63,9 +63,10 @@ let package = Package(
             path: "Sources/Modules/SecCodeEx",
             publicHeadersPath: "."
         ),
-        .systemLibrary(
+        .target(
             name: "SMCParamStruct",
-            path: "Sources/Modules/SMCParamStruct"
+            path: "Sources/Modules/SMCParamStruct",
+            publicHeadersPath: "."
         ),
         
         // Swift Libraries
@@ -135,7 +136,18 @@ let package = Package(
         // Autostart Helper
         .executableTarget(
             name: "AutostartHelper",
-            path: "Sources/AutostartHelper"
+            path: "Sources/AutostartHelper",
+            linkerSettings: [
+                .unsafeFlags(
+                    [
+                        "-Xlinker", "-sectcreate",
+                        "-Xlinker", "__TEXT",
+                        "-Xlinker", "__entitlements",
+                        "-Xlinker", "Sources/AutostartHelper/AutostartHelper.entitlements"
+                    ],
+                    .when(platforms: [.macOS])
+                )
+            ]
         ),
         
         // Main App-facing Library
