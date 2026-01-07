@@ -135,10 +135,7 @@ let package = Package(
         // Autostart Helper
         .executableTarget(
             name: "AutostartHelper",
-            path: "Sources/AutostartHelper",
-            exclude: [
-                "AutostartHelper.entitlements"
-            ]
+            path: "Sources/AutostartHelper"
         ),
         
         // Main App-facing Library
