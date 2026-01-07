@@ -96,7 +96,8 @@ let package = Package(
                 "BTPreprocessor",
                 "SMCComm",
                 "NSXPCConnectionAuditToken",
-                "SecCodeEx"
+                "SecCodeEx",
+                "SMCParamStruct"
             ],
             path: "Sources/BTShared"
         ),
