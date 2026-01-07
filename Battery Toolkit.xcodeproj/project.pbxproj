@@ -42,7 +42,6 @@
 		B0F6109E2F0CC71700B3CB54 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F610732F0CC71700B3CB54 /* main.swift */; };
 		B0F6109F2F0CC71700B3CB54 /* BTDaemonManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F610552F0CC71700B3CB54 /* BTDaemonManagement.swift */; };
 		B0F610A02F0CC71700B3CB54 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F610532F0CC71700B3CB54 /* main.swift */; };
-		B0F610A12F0CC71700B3CB54 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0F610692F0CC71700B3CB54 /* Info.plist */; };
 		B0F610A22F0CC71700B3CB54 /* me.mhaeuser.batterytoolkitd.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0F6106C2F0CC71700B3CB54 /* me.mhaeuser.batterytoolkitd.plist */; };
 		B0F610A32F0CC71700B3CB54 /* launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0F6106A2F0CC71700B3CB54 /* launchd.plist */; };
 		B0F610A42F0CC71700B3CB54 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0F610722F0CC71700B3CB54 /* Info.plist */; };
@@ -725,7 +724,6 @@
 			files = (
 				CE1F5E3E28D76C6D00F61F67 /* Settings.storyboard in Resources */,
 				CE3179F128DC729900E9C121 /* Upgrading.storyboard in Resources */,
-				B0F610A12F0CC71700B3CB54 /* Info.plist in Resources */,
 				B0F610A22F0CC71700B3CB54 /* me.mhaeuser.batterytoolkitd.plist in Resources */,
 				B0F610A32F0CC71700B3CB54 /* launchd.plist in Resources */,
 				B0F610A42F0CC71700B3CB54 /* Info.plist in Resources */,
@@ -881,7 +879,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				DEVELOPMENT_TEAM = 22V6L4CB3Q;
+				DEVELOPMENT_TEAM = 27CZAT8C2M;
 				INFOPLIST_FILE = "$(SRCROOT)/$(PRODUCT_NAME)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -900,7 +898,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				DEVELOPMENT_TEAM = 22V6L4CB3Q;
+				DEVELOPMENT_TEAM = 27CZAT8C2M;
 				INFOPLIST_FILE = "$(SRCROOT)/$(PRODUCT_NAME)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -1192,7 +1190,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BatteryToolkit/BatteryToolkit.entitlements;
-				DEVELOPMENT_TEAM = 22V6L4CB3Q;
+				DEVELOPMENT_TEAM = 27CZAT8C2M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/BatteryToolkit/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -1208,7 +1206,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BatteryToolkit/BatteryToolkit.entitlements;
-				DEVELOPMENT_TEAM = 22V6L4CB3Q;
+				DEVELOPMENT_TEAM = 27CZAT8C2M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/BatteryToolkit/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -1221,8 +1219,8 @@
 		CE9BD25328E8908100B6C61D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = AutostartHelper/AutostartHelper.entitlements;
-				DEVELOPMENT_TEAM = 22V6L4CB3Q;
+				CODE_SIGN_ENTITLEMENTS = Sources/AutostartHelper/AutostartHelper.entitlements;
+				DEVELOPMENT_TEAM = 27CZAT8C2M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSBackgroundOnly = YES;
@@ -1235,8 +1233,8 @@
 		CE9BD25428E8908100B6C61D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = AutostartHelper/AutostartHelper.entitlements;
-				DEVELOPMENT_TEAM = 22V6L4CB3Q;
+				CODE_SIGN_ENTITLEMENTS = Sources/AutostartHelper/AutostartHelper.entitlements;
+				DEVELOPMENT_TEAM = 27CZAT8C2M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSBackgroundOnly = YES;
@@ -1269,7 +1267,7 @@
 		CEECE32528BB648F00821A3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 22V6L4CB3Q;
+				DEVELOPMENT_TEAM = 27CZAT8C2M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BatteryToolkitService/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -1281,7 +1279,7 @@
 		CEECE32628BB648F00821A3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 22V6L4CB3Q;
+				DEVELOPMENT_TEAM = 27CZAT8C2M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BatteryToolkitService/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";

@@ -118,8 +118,7 @@ let package = Package(
             path: "Sources/BTDaemon",
             exclude: [
                 "launchd.plist",
-                "me.mhaeuser.batterytoolkitd.plist",
-                "Info.plist"
+                "me.mhaeuser.batterytoolkitd.plist"
             ]
         ),
         
