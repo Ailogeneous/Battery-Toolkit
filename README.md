@@ -63,6 +63,87 @@ You may want to add the `--no-quarantine` flag onto the end of the install comma
 
 Otherwise, follow the steps mentioned below.
 
+## Swift Package Integration
+
+To integrate Battery Toolkit as a Swift Package into your Xcode project:
+
+1.  In Xcode, open your project.
+2.  Navigate to `File > Add Packages...`.
+3.  Enter the URL of this GitHub repository: `https://github.com/mhaeuser/Battery-Toolkit.git`
+4.  Follow the prompts to add the package. Ensure you choose the desired version (e.g., `Up to Next Major Version`).
+5.  Add the `BatteryToolkit` library to your target's "Frameworks, Libraries, and Embedded Content" section.
+
+### Controlling Charging Features from your App
+
+Once integrated, you can use the `BatteryToolkit` module in your application to control charging features. The main entry point for interacting with the core functionalities is through the `BTActions` enum and the `BTDaemonXPCClient` enum.
+
+Example Usage (SwiftUI/UIKit):
+
+```swift
+import BatteryToolkit
+
+// To start the daemon
+Task {
+    let status = await BTActions.startDaemon()
+    print("Daemon start status: \(status)")
+}
+
+// To disable the power adapter
+Task {
+    do {
+        try await BTActions.disablePowerAdapter()
+        print("Power adapter disabled.")
+    } catch {
+        print("Failed to disable power adapter: \(error)")
+    }
+}
+
+// To get current battery state
+Task {
+    do {
+        let state = try await BTActions.getState()
+        print("Current state: \(state)")
+    } catch {
+        print("Failed to get state: \(error)")
+    }
+}
+
+// To get current settings
+Task {
+    do {
+        let settings = try await BTActions.getSettings()
+        print("Current settings: \(settings)")
+    } catch {
+        print("Failed to get settings: \(error)")
+    }
+}
+
+// To set new settings (e.g., max charge)
+Task {
+    do {
+        let newSettings: [String: NSObject & Sendable] = [
+            BTSettingsInfo.Keys.maxCharge: NSNumber(value: 85)
+        ]
+        try await BTActions.setSettings(settings: newSettings)
+        print("Settings updated.")
+    } catch {
+        print("Failed to set settings: \(error)")
+    }
+}
+
+// To register/unregister daemon
+// BTDaemonManagement is available through the BatteryToolkit module
+Task {
+    do {
+        let status = await BTDaemonManagement.start()
+        print("Daemon start status: \(status)")
+    }
+}
+
+```
+
+Remember to handle errors appropriately in your application. The `BatteryToolkit` module exposes an asynchronous API primarily through `async/await` for most operations.
+
 ### Opening the App
 
 > [!IMPORTANT]
