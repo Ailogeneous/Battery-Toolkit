@@ -7,6 +7,7 @@
 <p align="center"><a href="#features">Features</a> &bull; <a href="#installation">Installation</a> &bull; <a href="#usage">Usage</a> &bull; <a href="#api-reference">API Reference</a> &bull; <a href="#limitations"> Limitations </a> &bull; <a href="#technical-details"> Technical Details </a> &bull; <a href="#donate"> Donate </a></p>
 
 -----
+## For Developers Who Wish To Utilize Their Own Interface:
 
 # Features
 
@@ -56,6 +57,8 @@ To integrate Battery Toolkit as a Swift Package into your Xcode project for deve
     *   Then, try to **Build** your consuming application project again (`Product > Build`).
 
 These steps ensure that your local `Battery-Toolkit-SP` package is correctly configured for your application, allowing for secure XPC communication and proper daemon/service registration.
+
+**Important! ⚠️ Please keep in mind that because of the nature of handling the XPC service within the package, SPM cannot automatically update your local copy of this package. You will need to manually pull changes for any updates, and rerun the configuration script.** 
 
 # Usage
 
