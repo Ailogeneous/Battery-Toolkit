@@ -2,82 +2,47 @@
  <img alt="Battery Toolkit logo" src="Resources/LogoCaption.png" width=500 align="center">
 </p>
 
-<p align="center">Control the platform power state of your Apple Silicon Mac.</p>
+<p align="center">A Swift package to control the platform power state of your Apple Silicon Mac.</p>
 
-<p align="center"><a href="#features">Features</a> &bull; <a href="#install">Install</a> &bull; <a href="#usage">Usage</a> &bull; <a href="#uninstall"> Uninstall </a> &bull;<a href="#limitations"> Limitations </a> &bull; <a href="#technical-details"> Technical Details </a> &bull; <a href="#donate"> Donate </a></p>
+<p align="center"><a href="#features">Features</a> &bull; <a href="#installation">Installation</a> &bull; <a href="#usage">Usage</a> &bull; <a href="#api-reference">API Reference</a> &bull; <a href="#limitations"> Limitations </a> &bull; <a href="#technical-details"> Technical Details </a> &bull; <a href="#donate"> Donate </a></p>
 
 -----
 
 # Features
 
-## Limits battery charge to an upper limit
+*   **Limit Battery Charge:** Set an upper limit for the battery charge to prevent it from being always at 100%.
+*   **Drain to Lower Limit:** Set a lower limit for the battery charge to prevent short charging cycles.
+*   **Disable Power Adapter:** Discharge the battery by turning off the power adapter without unplugging it.
+*   **Manual Control:** A comprehensive set of functions to manually control the power state of the Mac.
 
-Modern batteries deteriorate more when always kept at full charge. For this reason, Apple introduced the “Optimized Charging“ feature for all their portable devices, including Macs. However, its limit cannot be changed, and you cannot force charging to be put on hold. Battery Toolkit allows specifying a hard limit past which battery charging will be turned off. For safety reasons, this limit cannot be lower than 50&nbsp;%.
-
-## Allows battery charge to drain to a lower limit
-
-Even when connected to power, your Mac's battery may slowly lose battery charge for various reasons. Short battery charging bursts can further deteriorate batteries. For this reason, Battery Toolkit allows specifying a limit only below which battery charging will be turned on. For safety reasons, this limit cannot be lower than 20&nbsp;%.
-
-**Note:** This setting is not honoured for cold boots or reboots, because Apple Silicon Macs reset their platform state in these cases. As battery charging will already be ongoing when Battery Toolkit starts, it lets charging proceed to the upper limit to not cause further short bursts across reboots.
-
-## Allows you to disable the power adapter
-
-If you want to discharge the battery of your Mac, e.g., to recalibrate it, you can turn off the power adapter without actually unplugging it. You can also have Battery Toolkit disable sleeping when the power adapter is disabled.
-
-**Note:** Your Mac may go to sleep immediately after enabling the power adapter again. This is a software bug in macOS and cannot easily be worked around.
-
-|<img alt="Power Settings" src="Resources/PowerSettings.png" width=607>|
-|:--:| 
-| **Fig. 1**. *Power Settings* |
-
-## Grants you manual control
-
-The Battery Toolkit "Commands" menu and its menu bar extra allow you to issue various commands related to the power state of your Mac. These include:
-* Enabling and disabling the power adapter
-* Requesting a full charge
-* Requesting a charge to the specified upper limit
-* Stopping charging immediately
-* Pausing all background activity
-
-|<img alt="Menu Bar Extra" src="Resources/MenuBarExtra.png" width=283>|
-|:----------|
-| **Fig. 2**. *Menu Bar Extra* |
-
-# Install
-
-> [!IMPORTANT]
-> Battery Toolkit currently only supports Apple Silicon Macs [#15](https://github.com/mhaeuser/Battery-Toolkit/issues/15)
-
-### Manual Install
-1. Go to the GitHub [releases](https://github.com/mhaeuser/Battery-Toolkit/releases/latest) page
-2. Download the latest non-dSYM build (i.e., `Battery-Toolkit-X.Y.zip`)
-3. Unzip the archive
-4. Drag `Battery Toolkit.app` into your Applications folder
-
-### Install via Homebrew :beer:
-1. Install [Homebrew](https://brew.sh) if you haven't already
-2. Open Terminal and run `brew tap mhaeuser/mhaeuser`
-3. Run `brew install battery-toolkit`
-
-You may want to add the `--no-quarantine` flag onto the end of the install command to bypass Gatekeeper more conveniently, but beware the potential security risks of doing so.
-
-Otherwise, follow the steps mentioned below.
-
-## Swift Package Integration
+# Installation
 
 To integrate Battery Toolkit as a Swift Package into your Xcode project:
 
 1.  In Xcode, open your project.
 2.  Navigate to `File > Add Packages...`.
-3.  Enter the URL of this GitHub repository: `https://github.com/mhaeuser/Battery-Toolkit.git`
+3.  Enter the URL of this GitHub repository: `https://github.com/Ailogeneous/Battery-Toolkit-SP`
 4.  Follow the prompts to add the package. Ensure you choose the desired version (e.g., `Up to Next Major Version`).
 5.  Add the `BatteryToolkit` library to your target's "Frameworks, Libraries, and Embedded Content" section.
 
-### Controlling Charging Features from your App
+# Configuration
 
-Once integrated, you can use the `BatteryToolkit` module in your application to control charging features. The main entry point for interacting with the core functionalities is through the `BTActions` enum and the `BTDaemonXPCClient` enum.
+After adding the package to your project, you need to configure it to work with your application's specific identifiers. A script is provided to automate this process.
 
-Example Usage (SwiftUI/UIKit):
+1.  Open a terminal and navigate to the `Battery-Toolkit` package directory within your project.
+2.  Run the configuration script:
+    ```bash
+    ./configure.sh
+    ```
+3.  The script will automatically detect your Xcode project's bundle identifier and team ID, and update the package files accordingly. If it cannot find the values, it will prompt you to enter them manually.
+
+This step is crucial for the XPC communication between your app and the `BatteryToolkit` daemon to work correctly.
+
+# Usage
+
+Once integrated, you can use the `BatteryToolkit` module in your application to control the charging features. The main entry point for interacting with the core functionalities is through the `BTActions` enum.
+
+Here are some examples:
 
 ```swift
 import BatteryToolkit
@@ -130,60 +95,38 @@ Task {
         print("Failed to set settings: \(error)")
     }
 }
-
-// To register/unregister daemon
-// BTDaemonManagement is available through the BatteryToolkit module
-Task {
-    do {
-        let status = await BTDaemonManagement.start()
-        print("Daemon start status: \(status)")
-    }
-}
-
 ```
 
-Remember to handle errors appropriately in your application. The `BatteryToolkit` module exposes an asynchronous API primarily through `async/await` for most operations.
+# API Reference
 
-### Opening the App
+The `BTActions` enum provides a set of static functions to interact with the Battery-Toolkit daemon.
 
-> [!IMPORTANT]
-> This step is necessary, because the app has not been notarized by Apple due to the membership fees of the Apple Developer Program. "Apple could not verify 'Battery Toolkit.app' is free of malware" refers to the [lack of notarizaion](https://support.apple.com/en-us/102445), not to any anomalies detected.
+## Daemon Management
 
-On macOS 14 Sonoma or below:
-1. Right click `Battery Toolkit.app`
-2. Click "Open"
-3. Click "Open" in the dialog box
+*   `startDaemon() async -> BTDaemonManagement.Status`: Starts the background daemon.
+*   `approveDaemon(timeout: UInt8) async throws`: Approves the background daemon.
+*   `upgradeDaemon() async -> BTDaemonManagement.Status`: Upgrades the background daemon.
+*   `removeDaemon() async throws`: Removes the background daemon.
+*   `stop()`: Disconnects the XPC connection to the daemon.
 
-On macOS 15 Sequoia or above:
-1. Try to open the app, it will tell you it's blocked
-2. Go to `System Settings > Privacy & Security` and scroll to the bottom
-3. Click "Open Anyway" to allow Battery Toolkit to open
-4. Click "Open Anyway" on the next dialog box and authenticate
-5. Open Battery Toolkit again from Applications folder
+## Power Control
 
-# Usage
+*   `disablePowerAdapter() async throws`: Disables the power adapter.
+*   `enablePowerAdapter() async throws`: Enables the power adapter.
+*   `chargeToLimit() async throws`: Charges the battery to the specified limit.
+*   `chargeToFull() async throws`: Charges the battery to 100%.
+*   `disableCharging() async throws`: Stops charging the battery.
 
-> [!CAUTION]
-> To ensure there is no chance of interference, please turn “Optimized Charging” **off** when Battery Toolkit is in use. <br>
->  Go to macOS System Settings > Battery > the (i) next to Battery Health > Optimized Battery Charging > toggle off
+## Background Activity
 
-1. Open Battery Toolkit from your Applications folder
-2. The menu bar will change to show the app menus, and a menu bar extra will should be visible
-3. Configure the settings through either method (see **Fig. 2, 3, 4**)
+*   `pauseActivity() async throws`: Pauses the daemon's background activity.
+*   `resumeActiivty() async throws`: Resumes the daemon's background activity.
 
-|<img alt="Menu Bar Main" src="Resources/MenuBarMain.png" width=316>|<img alt="Menu Bar Extra" src="Resources/MenuBarCommands.png" width=248>|
-|:----------|:----------|
-| **Fig. 3**. *Main Menu* | **Fig. 4**. *Menu Bar Commands* |
+## State and Settings
 
-If you prefer, you can quit the GUI to hide the menu bar extra and Battery Toolkit will keep running in the background.
-If you want to change any settings, simply re-open the app.
-
-# Uninstall
-
-1. Focus Battery Toolkit
-2. Open the main Battery Toolkit menu in the menu bar (see **Fig. 3**)
-3. Choose "Disable Background Activity"
-4. Move the app to the Trash and empty it
+*   `getState() async throws -> [String: NSObject & Sendable]`: Retrieves the current power state.
+*   `getSettings() async throws -> [String: NSObject & Sendable]`: Retrieves the current settings.
+*   `setSettings(settings: [String: NSObject & Sendable]) async throws`: Sets new values for the settings.
 
 # Limitations
 
@@ -195,17 +138,17 @@ Note that sleep should usually be disabled when the power adapter is disabled, a
 
 # Technical Details
 
-* Based on IOPowerManagement events to minimize resource usage, especially when not connected to power
-* Support for macOS Ventura daemons and login items for a more reliable experience
+*   Based on IOPowerManagement events to minimize resource usage, especially when not connected to power
+*   Support for macOS Ventura daemons and login items for a more reliable experience
 
 ## Security
-* Privileged operations are authenticated by the daemon
-* Privileged daemon exposes only a minimal protocol via XPC
-* XPC communication uses the latest macOS codesign features
+*   Privileged operations are authenticated by the daemon
+*   Privileged daemon exposes only a minimal protocol via XPC
+*   XPC communication uses the latest macOS codesign features
 
 # Credits
-* Icon based on [reference icon by Streamline](https://seekicon.com/free-icon/rechargable-battery_1)
-* README overhauled by [rogue](https://github.com/realrogue)
+*   Icon based on [reference icon by Streamline](https://seekicon.com/free-icon/rechargable-battery_1)
+*   README overhauled by [rogue](https://github.com/realrogue)
 
 # Donate
 For various reasons, I will not accept personal donations. However, if you would like to support my work with the [Kinderschutzbund Kaiserslautern-Kusel](https://www.kinderschutzbund-kaiserslautern.de/) child protection association, you may donate [here](https://www.kinderschutzbund-kaiserslautern.de/helfen-sie-mit/spenden/).

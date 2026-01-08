@@ -17,13 +17,10 @@ let package = Package(
             name: "batterytoolkitd",
             targets: ["BTDaemon"] 
         ),
-        .executable(
-            name: "AutostartHelper",
-            targets: ["AutostartHelper"] 
-        ),
+
         .executable(
             name: "BatteryToolkitService",
-            targets: ["BTService"] 
+            targets: ["BTService"]
         )
     ],
     dependencies: [],
@@ -126,27 +123,7 @@ let package = Package(
         .executableTarget(
             name: "BTService",
             dependencies: ["BTShared", "SimpleAuth"],
-            path: "Sources/BTService",
-            exclude: [
-                "Info.plist"
-            ]
-        ),
-        
-        // Autostart Helper
-        .executableTarget(
-            name: "AutostartHelper",
-            path: "Sources/AutostartHelper",
-            linkerSettings: [
-                .unsafeFlags(
-                    [
-                        "-Xlinker", "-sectcreate",
-                        "-Xlinker", "__TEXT",
-                        "-Xlinker", "__entitlements",
-                        "-Xlinker", "Sources/AutostartHelper/AutostartHelper.entitlements"
-                    ],
-                    .when(platforms: [.macOS])
-                )
-            ]
+            path: "Sources/BTService"
         ),
         
         // Main App-facing Library
@@ -157,14 +134,7 @@ let package = Package(
                 "SimpleAuth",
                 "CSIdentification"
             ],
-            path: "Sources/BatteryToolkit",
-            exclude: [
-                "Assets.xcassets",
-                "Views",
-                "Info.plist",
-                "BatteryToolkit.entitlements",
-                ".vscode"
-            ]
+            path: "Sources/BatteryToolkit"
         )
     ]
 )
