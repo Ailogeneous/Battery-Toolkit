@@ -17,26 +17,43 @@
 
 # Installation
 
-To integrate Battery Toolkit as a Swift Package into your Xcode project:
+To integrate Battery Toolkit as a Swift Package into your Xcode project for development and customization, follow these steps:
 
-1.  In Xcode, open your project.
-2.  Navigate to `File > Add Packages...`.
-3.  Enter the URL of this GitHub repository: `https://github.com/Ailogeneous/Battery-Toolkit-SP`
-4.  Follow the prompts to add the package. Ensure you choose the desired version (e.g., `Up to Next Major Version`).
-5.  Add the `BatteryToolkit` library to your target's "Frameworks, Libraries, and Embedded Content" section.
-
-# Configuration
-
-After adding the package to your project, you need to configure it to work with your application's specific identifiers. A script is provided to automate this process.
-
-1.  Open a terminal and navigate to the `Battery-Toolkit` package directory within your project.
-2.  Run the configuration script:
+1.  **Clone the Repository Locally:**
+    Open your terminal and clone the `Battery-Toolkit-SP` repository to a location on your local machine:
     ```bash
-    ./configure.sh
+    git clone https://github.com/Ailogeneous/Battery-Toolkit-SP.git /path/to/your/local/Battery-Toolkit-SP
     ```
-3.  The script will automatically detect your Xcode project's bundle identifier and team ID, and update the package files accordingly. If it cannot find the values, it will prompt you to enter them manually.
+    (Replace `/path/to/your/local/Battery-Toolkit-SP` with your desired local path.)
 
-This step is crucial for the XPC communication between your app and the `BatteryToolkit` daemon to work correctly.
+2.  **Add as a Local Package Dependency in Xcode:**
+    *   Open your consuming application's Xcode project.
+    *   Go to `File > Add Packages...`.
+    *   In the package dialog, click the `Add Local...` button.
+    *   Navigate to and select the locally cloned `Battery-Toolkit-SP` directory (e.g., `/path/to/your/local/Battery-Toolkit-SP`).
+    *   Follow the prompts to add the package. Ensure you choose the desired version (e.g., `Up to Next Major Version`).
+    *   Add the `BatteryToolkit` library product to your application target's "Frameworks, Libraries, and Embedded Content" section.
+
+3.  **Run the Configuration Script (`configure.sh`):**
+    This script is crucial for customizing the Swift Package to integrate correctly with your application's specific identifiers. It modifies the package's source files to match your consuming application's bundle identifier, team ID, and code-signing information.
+
+    *   Open your terminal.
+    *   Navigate to the root directory of your locally cloned `Battery-Toolkit-SP` package:
+        ```bash
+        cd /path/to/your/local/Battery-Toolkit-SP
+        ```
+    *   Run the configuration script:
+        ```bash
+        ./configure.sh
+        ```
+    *   The script will attempt to detect your Xcode project's bundle identifier and team ID from its `project.pbxproj`. If it cannot find these values, it will prompt you to enter them manually. **Ensure you provide the correct bundle identifier and team ID of your *consuming application* (the one you are building with your UI).**
+
+4.  **Clean and Rebuild Your Application:**
+    *   After running the `configure.sh` script, go back to Xcode.
+    *   Perform a **Clean Build Folder** (`Product > Clean Build Folder`) to ensure all old build artifacts are removed and the package is recompiled with the new configuration.
+    *   Then, try to **Build** your consuming application project again (`Product > Build`).
+
+These steps ensure that your local `Battery-Toolkit-SP` package is correctly configured for your application, allowing for secure XPC communication and proper daemon/service registration.
 
 # Usage
 
