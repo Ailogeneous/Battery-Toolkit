@@ -19,6 +19,8 @@
 
 To integrate Battery Toolkit as a Swift Package into your Xcode project for development and customization, follow these steps:
 
+**Important! ⚠️ Do Not Add Package via SPM**
+
 1.  **Clone the Repository Locally:**
     Open your terminal and clone the `Battery-Toolkit-SP` repository to a location on your local machine:
     ```bash
